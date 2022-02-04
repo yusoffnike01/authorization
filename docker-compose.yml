@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  # Postgres
+  postgres:
+    container_name: nestjs_jwt
+    image: postgres:12-alpine
+    restart: always
+    env_file: ./.env
+    ports:
+      - '${DB_PORT}:5432'
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      TZ: 'GMT+8'
+      PGTZ: 'GMT+8'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - nestjwt_network
+
+volumes:
+  postgres:
+  
+
+networks:
+  nestjwt_network:
+    driver: bridge
